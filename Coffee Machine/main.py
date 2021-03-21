@@ -30,6 +30,13 @@ resources = {
     "coffee": 100,
 }
 
+COINS = {
+    "quarters": 0.25,
+    "dimes": 0.1,
+    "nickles": 0.05,
+    "pennies": 0.01
+}
+
 
 def print_report():
     """Print resources of the coffee machine"""
@@ -50,12 +57,10 @@ def check_resources(order_ingredients):
 
 def process_coins():
     """Returns the total calculated from coins inserted."""
-    wallet = {}
-    coins = ["quarters", "dimes", "nickles", "pennies"]
+    total = 0
     print("Insert coins.")
-    for coin in coins:
-        wallet[coin] = int(input(f"How many {coin}?: "))
-    total = wallet["quarters"] * 0.25 + wallet["dimes"] * 0.10 + wallet["nickles"] * 0.05 + wallet["pennies"] * 0.01
+    for coin in COINS:
+        total += int(input(f"How many {coin}?: ")) * COINS[coin]
     return round(total, 2)
 
 
