@@ -33,7 +33,7 @@ def start_timer():
     short_break_sec = SHORT_BREAK_MIN * 60
     long_break_sec = LONG_BREAK_MIN * 60
 
-    if reps % 8 ==0:
+    if reps % 8 == 0:
         count_down(long_break_sec)
         title_label.config(text='Break', fg=RED)
     elif reps % 2 == 0:
@@ -54,12 +54,15 @@ def count_down(count):
         global timer
         timer = window.after(1000, count_down, count-1)
     else:
-        start_timer()
-        marks = ""
-        work_sessions = math.floor(reps/2)
-        for _ in range(work_sessions):
-            marks += '✔'
-        check_label.config(text=marks)
+        if reps % 8 == 0:
+            reset_timer()
+        else:
+            start_timer()
+            marks = ""
+            work_sessions = math.floor(reps/2)
+            for _ in range(work_sessions):
+                marks += '✔'
+            check_label.config(text=marks)
 
 
 # ---------------------------- UI SETUP ------------------------------- #
