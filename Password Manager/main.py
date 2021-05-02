@@ -60,7 +60,7 @@ website_input.focus()
 
 email_input = tk.Entry(width=35)
 email_input.grid(row=2, column=1, columnspan=2, sticky="EW")
-email_input.insert(0, 'arredocana@gmail.com')
+email_input.insert(0, 'email@gmail.com')
 
 password_input = tk.Entry(width=21, show="*")
 password_input.grid(row=3, column=1, sticky="EW")
