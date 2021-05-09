@@ -1,36 +1,54 @@
 import tkinter as tk
 from tkinter import messagebox
 from password_generator import generate
-#import pyperclip
+import json
+# import pyperclip
 
 # ---------------------------- PASSWORD GENERATOR ------------------------------- #
+
 
 def generate_password():
     password = generate()
     password_input.insert(0, password)
-    #pyperclip.copy(pasword)
+    # pyperclip.copy(pasword)
 
 # ---------------------------- SAVE PASSWORD ------------------------------- #
+
 
 def save_password():
 
     website = website_input.get()
     email = email_input.get()
     password = password_input.get()
+    new_data = {
+        website: {
+            "email": email,
+            "password": password
+        }
+    }
 
     if not website or not email or not password:
         messagebox.showinfo(title='Oops', message="Please don't leave any fields empty!")
 
     else:
-        is_ok = messagebox.askokcancel(title=website, message=f"There are the details entered: \nEmail: {email} "
-                                                        f"\nPassword: {password} \n Is it ok to save?")
+        try:
+            with open("data.json", 'r') as data_file:
+                # Reading old data
+                data = json.load(data_file)
+        except FileNotFoundError:
+            with open("data.json", "w") as data_file:
+                json.dump(new_data, data_file, indent=4)
+        else:
+            # Updating old data with new data
+            data.update(new_data)
 
-        if is_ok:
-            with open("data.txt", 'a') as f:
-                f.write(f'{website} | {email} | {password}\n')
-                website_input.delete(0, 'end')
-                password_input.delete(0, 'end')    
-    
+            with open("data.json", 'w') as data_file:
+                # Saving updated data
+                json.dump(data, data_file, indent=4)
+        finally:
+            website_input.delete(0, 'end')
+            password_input.delete(0, 'end')
+
 
 # ---------------------------- UI SETUP ------------------------------- #
 window = tk.Tk()
